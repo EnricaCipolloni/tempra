@@ -6,6 +6,7 @@ export const it = {
 	'nav.coach': 'Coach',
 	'nav.home': 'Home',
 	'lang.label': 'Lingua',
+	'haptics.label': 'Vibrazione',
 
 	'home.title': 'Testa lucida quando le gambe bruciano.',
 	'home.lead':

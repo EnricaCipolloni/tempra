@@ -8,6 +8,7 @@
 		NBACK_N,
 		ladder
 	} from '$lib/constants/config.constants';
+	import { hapticBlockEnd, hapticTap, hapticTrial } from '$lib/services/haptics.service';
 	import { localeStore } from '$lib/stores/locale.store';
 	import type { Difficulty, GameKey, SquadConfig } from '$lib/types/config';
 	import type { GameStats, TrialOutcome } from '$lib/types/result';
@@ -48,6 +49,7 @@
 	const Game = $derived(nonNullish(currentGame) ? GAME_COMPONENTS[currentGame] : undefined);
 
 	const onTrial = ({ correct, rt_ms }: TrialOutcome) => {
+		hapticTrial({ correct, rt_ms });
 		live = {
 			correct: live.correct + (correct ? 1 : 0),
 			wrong: live.wrong + (correct ? 0 : 1),
@@ -63,6 +65,7 @@
 		});
 
 	const abort = () => {
+		hapticTap();
 		aborted = true;
 	};
 
@@ -126,6 +129,7 @@
 				return;
 			}
 
+			hapticBlockEnd();
 			onDone(finished, Date.now() - startedAt);
 		};
 

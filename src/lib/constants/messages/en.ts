@@ -8,6 +8,7 @@ export const en: Record<I18nKey, string> = {
 	'nav.coach': 'Coach',
 	'nav.home': 'Home',
 	'lang.label': 'Language',
+	'haptics.label': 'Vibration',
 
 	'home.title': 'Clear head while the legs are burning.',
 	'home.lead':

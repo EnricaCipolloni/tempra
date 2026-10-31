@@ -50,8 +50,9 @@ Defaults: difficulty 3, all six games, 90 s block, 30 s per game, time pressure 
 2. For each slot: 1.5 s interstitial with the game's name and rule, then the game runs for the slot length.
 3. Points: 10 per correct trial, minus 5 per error when the penalty is on, never below zero per game.
 4. When under 3 s remain no new slot starts; the block ends. Aborting discards the block.
-5. Summary: points, accuracy, mean reaction time (correct trials only), Tempra index = round((0.6 · accuracy + 0.4 · speed) · 100 · (0.8 + 0.08 · difficulty)) where speed maps mean RT from 2200 ms (0) to 400 ms (1), 0.5 when no RT exists. A verdict line keys off accuracy (≥ 90%, ≥ 60%, below).
-6. The result is stored on the device and sent to the squad (`submit_result`), then broadcast on the channel so the coach's roster updates at once. If the send fails it goes into an outbox and is retried on reload and when the device comes back online; a badge on the home card shows how many are pending.
+5. Haptics: a light tick on a correct tap, a stronger one on any error (a wrong tap or a missed trial), a distinct pattern when the block ends. Nothing on a correct withhold, since no tap happened. The Abort button ticks too. The apps use the phone's haptics; the website uses the browser's vibration API where one exists, so iOS Safari stays silent. The Vibration switch in the footer turns all of it off on that device: it is on by default, remembered on the device, and hidden where the browser cannot vibrate.
+6. Summary: points, accuracy, mean reaction time (correct trials only), Tempra index = round((0.6 · accuracy + 0.4 · speed) · 100 · (0.8 + 0.08 · difficulty)) where speed maps mean RT from 2200 ms (0) to 400 ms (1), 0.5 when no RT exists. A verdict line keys off accuracy (≥ 90%, ≥ 60%, below).
+7. The result is stored on the device and sent to the squad (`submit_result`), then broadcast on the channel so the coach's roster updates at once. If the send fails it goes into an outbox and is retried on reload and when the device comes back online; a badge on the home card shows how many are pending.
 
 ## Coach panel
 

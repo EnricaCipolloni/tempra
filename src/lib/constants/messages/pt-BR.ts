@@ -9,6 +9,7 @@ export const ptBR: Record<I18nKey, string> = {
 	'nav.coach': 'Treinador',
 	'nav.home': 'Início',
 	'lang.label': 'Idioma',
+	'haptics.label': 'Vibração',
 
 	'home.title': 'Cabeça fria quando as pernas queimam.',
 	'home.lead':

@@ -9,7 +9,7 @@ src/
   app.css                     design tokens (dark-first), @theme bridge to Tailwind, shared primitives
   app.html                    font preload, manifest, favicon (fonts are self-hosted in static/fonts, @font-face in app.css)
   routes/
-    +layout.svelte            header (brand, Athlete / Coach tabs), footer (locale picker, version), Toast
+    +layout.svelte            header (brand, Athlete / Coach tabs), footer (locale picker, vibration switch, version), Toast
     +page.svelte              landing
     athlete/+page.svelte      join form → home card → BlockRunner → BlockSummary
     coach/+page.svelte        create / restore → squad card + ConfigForm + ResultsTable
@@ -21,8 +21,8 @@ src/
       coach/                  Roster, AthleteHistory, ConfigForm, ResultsTable
       ui/                     Brand, Kpi, Toast, Sparkline, InfoTip ("i" button that shows a detail on demand)
     constants/                config, locale, supabase, messages/{it,en,pt-BR}.ts
-    services/                 supabase.service (lazy client), squad.service (RPC wrappers), realtime.service (channel: config, presence, result broadcast)
-    stores/                   locale, squad (athlete side), coach, results (local history), outbox (unsent results), toast
+    services/                 supabase.service (lazy client), squad.service (RPC wrappers), realtime.service (channel: config, presence, result broadcast), haptics.service (fire-and-forget vibration)
+    stores/                   locale, haptics, squad (athlete side), coach, results (local history), outbox (unsent results), toast
     types/                    config, result, game, presence
     utils/                    i18n, nullish, random, scoring, roster, storage, time, trial, device
   service-worker.ts           offline shell (cache-first assets, network-first pages)
@@ -60,6 +60,7 @@ interface GameProps {
 - Report `rt_ms` only for correct trials (mean RT is over correct answers).
 - Render `TrialTimer` inside `{#key trialId}` so the bar restarts per trial.
 - BlockRunner owns the slot clock and unmounts the game when the slot ends. A game never knows how long it runs.
+- BlockRunner also plays the haptics from `onTrial`, so a game never touches `haptics.service`. Calls there are never awaited and never throw: a reaction time must not wait on feedback. The footer switch writes `haptics.store`, which pushes a plain flag into the service, so a trial never reads storage. `rt_ms: null` on a correct trial means a withhold, which stays silent, so keep reporting `rt_ms` for every correct tap.
 - Register in `GAME_COMPONENTS`, add the key to `GAME_KEYS`, add `game.<key>.name|hint|about` to every catalog, document the ladder in `PRODUCT.md`.
 
 ## i18n
@@ -94,3 +95,5 @@ Real `<button>` / `<a>` elements, labelled inputs (`for` / `id`), `role="status"
 ## Native shells
 
 `capacitor.config.ts` points both shells at `build/`. `npm run cap:sync` builds the web app and copies it in; `npm run cap:android` / `npm run cap:ios` also open the IDE. CI (`mobile.yml`) assembles a debug APK and compiles the iOS project unsigned on every PR. Icons and splash screens are still the Capacitor defaults.
+
+Adding a Capacitor plugin changes tracked files: run `npm run cap:sync` and commit `ios/App/CapApp-SPM/Package.swift`, `android/capacitor.settings.gradle` and `android/app/capacitor.build.gradle`. Haptics go through `@capacitor/haptics` in the apps and `navigator.vibrate` on the web. The iOS Simulator has no haptics, so real vibration can only be confirmed on a physical phone.

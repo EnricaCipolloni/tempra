@@ -4,6 +4,8 @@
 	import Brand from '$lib/components/ui/Brand.svelte';
 	import Toast from '$lib/components/ui/Toast.svelte';
 	import { LOCALE_NAME, SUPPORTED_LOCALES, type Locale } from '$lib/constants/locale.constants';
+	import { hapticsSupported } from '$lib/services/haptics.service';
+	import { hapticsStore, setHaptics } from '$lib/stores/haptics.store';
 	import { localeStore, setLocale } from '$lib/stores/locale.store';
 	import { t } from '$lib/utils/i18n.utils';
 	import type { Snippet } from 'svelte';
@@ -59,6 +61,17 @@
 
 	<footer class="text-fg-2 flex flex-wrap items-center justify-between gap-2 text-xs">
 		<span>{t({ locale: $localeStore, key: 'footer.made' })}</span>
+		{#if hapticsSupported()}
+			<label class="flex cursor-pointer items-center gap-1.5 py-1">
+				<input
+					type="checkbox"
+					data-tid="haptics-toggle"
+					checked={$hapticsStore}
+					onchange={(e) => setHaptics(e.currentTarget.checked)}
+				/>
+				{t({ locale: $localeStore, key: 'haptics.label' })}
+			</label>
+		{/if}
 		<span class="flex items-center gap-3">
 			<a href="/privacy" class="text-fg-2" data-tid="footer-privacy">
 				{t({ locale: $localeStore, key: 'footer.privacy' })}
