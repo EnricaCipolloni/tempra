@@ -1,6 +1,6 @@
 {
 	"name": "tempra",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "tempra.ventilii.dev: cognitive-load games for athletes during recovery breaks, with coach-controlled remote parameters. Version is managed by release-please.",
 	"private": true,
 	"license": "MIT",
