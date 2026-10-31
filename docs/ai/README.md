@@ -7,5 +7,6 @@ Long-form documentation behind [`AGENTS.md`](../../AGENTS.md) and [`CLAUDE.md`](
 - [`pr-and-ci.md`](./pr-and-ci.md): PR title and body rules, local quality gates, what CI runs, how deploys happen.
 - [`frontend/README.md`](./frontend/README.md): folder taxonomy, Svelte 5 patterns, the game contract, i18n, design tokens.
 - [`backend/README.md`](./backend/README.md): Supabase schema, RPC surface, security model, realtime, how to change the schema.
+- [`officina.md`](./officina.md): how Officina runs agent work here (lanes, who approves, what agents never touch), in Italian for the owner. Specs follow [`spec-driven-development/workflow.md`](./spec-driven-development/workflow.md).
 
 When two pages disagree, code wins over CI, CI over these pages, these pages over `AGENTS.md`, and `AGENTS.md` over tool-specific files. Fix the disagreement in the same PR you noticed it.

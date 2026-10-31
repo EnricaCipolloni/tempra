@@ -36,6 +36,7 @@ Tempra is a static SvelteKit 2 / Svelte 5 app published on GitHub Pages at https
 | Touch a frontend file, add a game or copy | [`docs/ai/frontend/README.md`](./docs/ai/frontend/README.md) |
 | Touch the schema, RPCs, keys or realtime  | [`docs/ai/backend/README.md`](./docs/ai/backend/README.md)   |
 | Check what you may change without asking  | [`docs/ai/governance.md`](./docs/ai/governance.md)           |
+| Work on an Officina task or write a spec  | [`docs/ai/officina.md`](./docs/ai/officina.md)               |
 
 ## 4. Meta-update rule
 

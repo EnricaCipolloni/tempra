@@ -1,0 +1,77 @@
+# Officina project config: how agents may work on this repository. Guide: docs/ai/officina.md.
+# Officina reads this file from the default branch; a push that changes it refreshes the stored copy.
+# Lanes are decided by the paths a change really touches, read from the diff, not from what an agent claims.
+version: 1
+
+docs:
+  entry: AGENTS.md
+  spec_template: docs/ai/spec-driven-development/template.md
+  spec_dir: docs/ai/spec-driven-development/specs
+  pr_template: .github/pull_request_template.md
+
+# Same rule as the pr-title check in checks.yml: the builder's pull request title must match it.
+pull_request:
+  title_pattern: '^(feat|fix|perf|deps|revert|docs|style|chore|refactor|test|build|ci)\([-a-zA-Z0-9,._/]+\)!?: .+$'
+
+# The site job of checks.yml. e2e (Playwright browsers) and mobile.yml (Gradle, Xcode) run only in CI.
+setup: ['npm ci']
+verify: ['npm run quality', 'npm run check', 'npm test', 'npm run build']
+
+# Every push to main deploys the site to GitHub Pages, so every result gets a person's check.
+release:
+  on_merge: production
+
+lanes:
+  # Agents never build in the red lane: they may write the spec, a person implements it.
+  red:
+    agents_build: false
+    approvals:
+      spec_review: [{ role: owner }]
+    paths:
+      # Protected paths, see docs/ai/governance.md#protected-paths-change-only-when-the-task-names-them
+      - '.github/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'supabase/**'
+      - 'src/lib/constants/supabase.constants.ts'
+      - 'static/CNAME'
+      - 'eslint.config.js'
+      - '.prettierrc'
+      - '.prettierignore'
+      - 'tsconfig.json'
+      - 'release-please-config.json'
+      - '.release-please-manifest.json'
+      - 'CHANGELOG.md'
+      # Toolchain and the static export that goes live on every merge
+      - '.npmrc'
+      - '.node-version'
+      - 'svelte.config.js'
+      - 'vite.config.ts'
+      # Native shells: the app ID is fixed once a build reaches a store
+      - 'capacitor.config.ts'
+      - 'android/**'
+      - 'ios/**'
+      # Licence, security policy, repo scripts, and the hooks that run on maintainers' machines
+      - 'LICENSE'
+      - 'SECURITY.md'
+      - 'scripts/**'
+      - '.claude/**'
+
+  standard:
+    paths: ['**']
+    wip: 3
+    diff_lines: 800
+    budget_usd: 25
+    approvals:
+      spec_review: [{ domain: product }]
+      verifying: [{ domain: product, when: user_visible }]
+
+  # UI copy only, both catalogs (the i18n check in npm run lint keeps them in step).
+  green:
+    paths: ['src/lib/constants/messages/**']
+    wip: 5
+    diff_lines: 600
+    budget_usd: 5
+    approvals:
+      spec_review: [{ requester: true }, { domain: product }]
+      verifying: [{ requester: true }]
