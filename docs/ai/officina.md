@@ -9,7 +9,7 @@ Officina non cambia le regole del repository: lavora tramite una GitHub App che 
 1. **Richiesta.** Scrivi cosa vuoi con parole tue, dalla bacheca di Officina (il link arriva con l'invito). Se manca qualcosa, un agente ti fa al massimo quattro domande.
 2. **Proposta.** Un agente legge il codice e scrive la spec con il [modello del repository](./spec-driven-development/template.md). Obiettivo e criteri di accettazione sono in italiano semplice.
 3. **Approvazione della proposta.** Le persone indicate qui sotto la leggono, la commentano e la approvano. Senza approvazione non si costruisce nulla.
-4. **Realizzazione.** Un agente fa la modifica su un ramo suo, esegue i controlli (`npm run quality`, `npm run check`, `npm test`, `npm run build`) e apre la pull request.
+4. **Realizzazione.** Un agente fa la modifica su un ramo suo, esegue gli stessi controlli della CI (`npm run lint`, `npm run check`, `npm test`, `npm run build`) e apre la pull request.
 5. **Revisione.** Due agenti che non hanno scritto il codice la controllano: uno rispetto alla spec, l'altro per correttezza. Anche i commenti lasciati su GitHub tornano all'agente che costruisce.
 6. **Verifica.** Una lista dice cosa guardare e con quanta cura. Le persone indicate provano il risultato e lo approvano, oppure lo rimandano indietro con un commento.
 7. **Pubblicazione.** Con le approvazioni complete la modifica viene unita su GitHub e va online.
@@ -28,7 +28,7 @@ Le modifiche si dividono in tre zone, decise dai file che la modifica tocca davv
 | **standard** | tutto il resto: giochi, schermate, punteggi                | sì                    | Enrica                     | Enrica, quando la modifica si vede nell'app |
 | **rossa**    | configurazione, database, dominio, app native (vedi sotto) | **no**                | Antonio                    | Antonio, che la realizza a mano             |
 
-In ogni passaggio Officina aggiunge sempre l'approvazione di Antonio, che cura il codice. Enrica decide sul prodotto: cosa cambia per coach e atleti, i testi, l'aspetto. Antonio decide sul codice e sulle modifiche rischiose. Solo Antonio può segnare una modifica come "non visibile nell'app": nel dubbio la verifica tocca a Enrica.
+"Antonio" e "Enrica" qui sono i ruoli in Officina, non su GitHub: su GitHub Enrica è la proprietaria del repository, in Officina il progetto è curato da Antonio (ruolo owner, che nella configurazione approva la zona rossa) ed Enrica approva per il prodotto (dominio `product`). In ogni passaggio Officina aggiunge sempre l'approvazione di Antonio, che cura il codice. Enrica decide sul prodotto: cosa cambia per coach e atleti, i testi, l'aspetto. Antonio decide sul codice e sulle modifiche rischiose. Solo Antonio può segnare una modifica come "non visibile nell'app": nel dubbio la verifica tocca a Enrica.
 
 ## Cosa gli agenti non toccano mai
 

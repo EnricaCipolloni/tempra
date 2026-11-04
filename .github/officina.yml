@@ -13,14 +13,16 @@ docs:
 pull_request:
   title_pattern: '^(feat|fix|perf|deps|revert|docs|style|chore|refactor|test|build|ci)\([-a-zA-Z0-9,._/]+\)!?: .+$'
 
-# The site job of checks.yml. e2e (Playwright browsers) and mobile.yml (Gradle, Xcode) run only in CI.
+# The site job of checks.yml, non-mutating like CI. e2e (Playwright browsers) and mobile.yml (Gradle, Xcode) run only in CI.
 setup: ['npm ci']
-verify: ['npm run quality', 'npm run check', 'npm test', 'npm run build']
+verify: ['npm run lint', 'npm run check', 'npm test', 'npm run build']
 
 # Every push to main deploys the site to GitHub Pages, so every result gets a person's check.
 release:
   on_merge: production
 
+# Roles are Officina roles, set per project in Officina, not GitHub permissions: the Officina owner
+# of this project is Antonio (code and high-risk changes); Enrica is a contributor with the product domain.
 lanes:
   # Agents never build in the red lane: they may write the spec, a person implements it.
   red:
@@ -66,7 +68,7 @@ lanes:
       spec_review: [{ domain: product }]
       verifying: [{ domain: product, when: user_visible }]
 
-  # UI copy only, both catalogs (the i18n check in npm run lint keeps them in step).
+  # UI copy only, every locale catalog (the i18n check in npm run lint keeps them in step).
   green:
     paths: ['src/lib/constants/messages/**']
     wip: 5

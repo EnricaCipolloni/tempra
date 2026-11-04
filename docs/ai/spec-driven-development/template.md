@@ -26,7 +26,7 @@ Status: Draft
 
 ## Copy
 
-<!-- Every new or changed UI string as a table: key, it, en. Short, clear, human, no em dashes. Remove only if no user-visible text changes. -->
+<!-- Every new or changed UI string as a table: key, then one column per locale in `src/lib/constants/messages/`. Short, clear, human, no em dashes. Remove only if no user-visible text changes. -->
 
 ## Supabase (mandatory when touching supabase/**, RPCs or realtime)
 

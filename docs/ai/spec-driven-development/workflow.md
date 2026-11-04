@@ -35,6 +35,6 @@ Write a spec first, implement it second. Specs are Markdown files under [`specs/
 
 1. **Clarify:** scope, edge cases, acceptance criteria. Search code and open issues.
 2. **Spec:** copy the template into `specs/`, status `Draft`. Resolve every pending decision before building.
-3. **Build:** implement on one branch, update `PRODUCT.md` and both locale catalogs in the same PR, run the gates in [`pr-and-ci.md`](../pr-and-ci.md#4-local-quality-gates).
+3. **Build:** implement on one branch, update `PRODUCT.md` and every locale catalog in the same PR, run the gates in [`pr-and-ci.md`](../pr-and-ci.md#4-local-quality-gates).
 4. **Adjust:** a small gap (wrong path, missed edge case) is fixed in the spec while building; a product question stops the build until the owner answers.
 5. **Close:** compare the result with the spec before review and flag any divergence. The spec and its assets stay after merge.
