@@ -56,9 +56,12 @@
 					break;
 				}
 
+				// Compare by key: `buttons` is deep $state, so a tapped colour is a proxy, never `=== i`.
+				const correct = choice?.key === i.key;
+
 				onTrial({
-					correct: choice === i,
-					rt_ms: choice === i ? Math.round(performance.now() - started) : null
+					correct,
+					rt_ms: correct ? Math.round(performance.now() - started) : null
 				});
 				await sleep(220);
 			}
