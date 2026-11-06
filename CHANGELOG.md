@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.1.4](https://github.com/EnricaCipolloni/tempra/compare/v0.1.3...v0.1.4) (2026-11-06)
+
+
+### Features
+
+* **athlete:** shorter copy, details behind an info tap ([#28](https://github.com/EnricaCipolloni/tempra/issues/28)) ([b6fae31](https://github.com/EnricaCipolloni/tempra/commit/b6fae31c814d9cba77845f6b99dbf5c8cd1da110))
+* **coach:** delete an athlete's results or the whole squad ([#24](https://github.com/EnricaCipolloni/tempra/issues/24)) ([73c3e78](https://github.com/EnricaCipolloni/tempra/commit/73c3e7870b86cd189d32d94c4f6a09f630330a76))
+* **home:** add a privacy page and a nickname hint on join ([#25](https://github.com/EnricaCipolloni/tempra/issues/25)) ([999d495](https://github.com/EnricaCipolloni/tempra/commit/999d495720a48a00ad31998d257bf62bc9927ada))
+* **home:** terms of use, report link and one place for the operator ([#33](https://github.com/EnricaCipolloni/tempra/issues/33)) ([1b95639](https://github.com/EnricaCipolloni/tempra/commit/1b956393385b4ba605b135aa785d652dabe9839f))
+* **session:** short haptic feedback on taps and at block end ([#32](https://github.com/EnricaCipolloni/tempra/issues/32)) ([22b45ac](https://github.com/EnricaCipolloni/tempra/commit/22b45ac2dc2caadca22ab71378eddb9773bffc9b))
+
+
+### Bug Fixes
+
+* **athlete:** drop queued results of a deleted squad ([#34](https://github.com/EnricaCipolloni/tempra/issues/34)) ([e550d63](https://github.com/EnricaCipolloni/tempra/commit/e550d6329c7e6a64777580ffee087fca6f941fa0))
+* **games:** count correct Stroop answers ([#42](https://github.com/EnricaCipolloni/tempra/issues/42)) ([c53e550](https://github.com/EnricaCipolloni/tempra/commit/c53e55082cd8a34bba6e8657d0d6310e820a7625))
+* **supabase:** no automatic purge, keep the history ([#36](https://github.com/EnricaCipolloni/tempra/issues/36)) ([9af811a](https://github.com/EnricaCipolloni/tempra/commit/9af811a4703389ece079cf353f2493c2954245ea))
+
+
+### Miscellaneous Chores
+
+* **pages:** ship the Saira licence and guard the self-hosted fonts ([#35](https://github.com/EnricaCipolloni/tempra/issues/35)) ([c0f54f4](https://github.com/EnricaCipolloni/tempra/commit/c0f54f4a76bd1dfccdd6dbf4da236ab8421deb29))
+
+
+### Continuous Integration
+
+* **actions:** bump actions/setup-java from 4.7.1 to 6.1.0 ([#37](https://github.com/EnricaCipolloni/tempra/issues/37)) ([e030a28](https://github.com/EnricaCipolloni/tempra/commit/e030a281329de0dfe6f7dc88d28b053e6d254bb5))
+* **actions:** bump gradle/actions/setup-gradle from 6.4.0 to 6.4.1 ([#39](https://github.com/EnricaCipolloni/tempra/issues/39)) ([e9bb1a0](https://github.com/EnricaCipolloni/tempra/commit/e9bb1a053fe152948f0477767dce78fbba5bb862))
+* **release:** pass the bot app id as client-id ([#44](https://github.com/EnricaCipolloni/tempra/issues/44)) ([6b61758](https://github.com/EnricaCipolloni/tempra/commit/6b61758194b343cffebf1b15d629a0577a3a5712))
+
 ## [0.1.3](https://github.com/EnricaCipolloni/tempra/compare/v0.1.2...v0.1.3) (2026-10-31)
 
 
