@@ -10,9 +10,13 @@ Examples: `feat(games): add simon sequence`, `fix(realtime): resubscribe after r
 
 Follow [`.github/pull_request_template.md`](../../.github/pull_request_template.md): `# Motivation`, `# Changes`, `# Tests`. No hard-wrapped lines, no filler, no diff narration; write what the diff cannot say (why, trade-offs, what was left out). Tests are concrete: commands and outcomes, manual steps at 390px.
 
-## 3. Atomicity
+## 3. Scope and parallel PRs
 
-Rules 2 (atomic) and 3 (small) of the universal standard. An "and also" in a title means split.
+[Rule 2, scoped](https://github.com/AntonioVentilii/officina/blob/main/standards/code.md#2-scoped) and [rule 3, parallel, not stacked](https://github.com/AntonioVentilii/officina/blob/main/standards/code.md#3-parallel-not-stacked) of the universal standard. What they mean in Tempra:
+
+- **One scope carries everything it needs to pass CI.** A new RPC travels with its migration, its wrapper in `squad.service.ts`, the mock in `e2e/supabase-mock.ts` and its spec; new copy travels with all three catalogs; a new coach parameter with `DEFAULT_SQUAD_CONFIG` and `default_squad_config()`. The [workflows](./workflows/) list each set.
+- **Merges are squash only**, so one PR is one commit on `main` and its title is the changelog line.
+- **Stack only on code another open PR adds:** a feature that calls an RPC still in review is stacked on it; docs, tooling and every other feature branch from `main`.
 
 ## 4. Local quality gates
 
