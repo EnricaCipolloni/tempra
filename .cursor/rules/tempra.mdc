@@ -4,10 +4,4 @@ globs:
 alwaysApply: true
 ---
 
-Read `AGENTS.md` first; `docs/ai/` is the source of truth (frontend, backend, governance, PR and CI). This rule file never overrides them.
-
-- Svelte 5 runes only; values derived from props are `$derived`; game loops live in `onMount`.
-- `isNullish` / `nonNullish` from `$lib/utils/nullish.utils`; imports through `$lib/...`.
-- Every user-visible string goes through `t({ locale, key })` and into both catalogs under `src/lib/constants/messages/`.
-- Gates: `npm run quality`, `npm run check`, `npm test`, `npm run e2e`, `npm run build`.
-- PR title: Conventional Commit with scope. No AI attribution in commits or PRs. No em dashes in prose.
+Read `AGENTS.md` first: it links the universal code standard and lists Tempra's own rules (section 4), the commands (section 2) and the page to read for each kind of change (section 5). `docs/ai/` is the source of truth; this rule file never overrides it.

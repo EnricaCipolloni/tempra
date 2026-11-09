@@ -2,7 +2,7 @@
 
 ## 1. PR title
 
-Conventional Commits with a **required scope**: `type(scope): description`. The `pr-title` job rejects anything else. Verbs: `feat`, `fix`, `perf`, `refactor`, `style`, `docs`, `test`, `chore`, `build`, `ci`, `deps`, `revert`. Scopes in use: `games`, `session`, `coach`, `athlete`, `home`, `i18n`, `scoring`, `supabase`, `realtime`, `pages`, `ci`, `deps`, `ai` (for `docs/ai/**`), `release`, `mobile`.
+Conventional Commits with a **required scope**: `type(scope): description`. The `pr-title` job rejects anything else. Verbs: `feat`, `fix`, `perf`, `refactor`, `style`, `docs`, `test`, `chore`, `build`, `ci`, `deps`, `revert`. Scopes in use: `games`, `session`, `coach`, `athlete`, `home`, `i18n`, `scoring`, `supabase`, `realtime`, `pages`, `brand`, `repo`, `github`, `ci`, `actions`, `deps`, `npm-deps`, `ai` (for `docs/ai/**` and the agent pointer files), `release`, `mobile`. Prefer an existing scope; a new one names the area the change lives in.
 
 Examples: `feat(games): add simon sequence`, `fix(realtime): resubscribe after reconnect`, `docs(ai): document the game contract`.
 
@@ -12,7 +12,7 @@ Follow [`.github/pull_request_template.md`](../../.github/pull_request_template.
 
 ## 3. Atomicity
 
-One logical change per PR. "And also" means split.
+Rules 2 (atomic) and 3 (small) of the universal standard. An "and also" in a title means split.
 
 ## 4. Local quality gates
 
@@ -54,7 +54,7 @@ The ruleset for `main` lives only in the repository settings (Settings → Rules
 
 ## 8. Database changes
 
-Write a new file under `supabase/migrations/` named `YYYYMMDDHHMMSS_<snake_case>.sql`, apply it to the `tempra` project (Supabase MCP `apply_migration` or the dashboard SQL editor), and describe the applied state in the file header. Never edit an applied migration.
+Follow [`workflows/change-the-schema.md`](./workflows/change-the-schema.md). Never edit an applied migration, and apply a new one to the live project before merging, since the deploy runs on every push to `main`.
 
 ## 9. Dependencies
 

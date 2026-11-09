@@ -1,5 +1,7 @@
 # Copilot instructions
 
-This repository is documented for agents in [`AGENTS.md`](../AGENTS.md) (canonical entry) and [`docs/ai/`](../docs/ai/) (source of truth). Read `AGENTS.md` first and follow its commandments: Svelte 5 runes only, `$derived` for anything computed from a prop, game loops in `onMount`, `isNullish` / `nonNullish` instead of direct null checks, every user-visible string through `t({ locale, key })` in both catalogs, imports through `$lib/...`, mobile first at 390px, no AI attribution in commits or PRs, no em dashes in prose.
+This repository is documented for agents in [`AGENTS.md`](../AGENTS.md) (canonical entry) and [`docs/ai/`](../docs/ai/README.md) (source of truth). This file never overrides them.
 
-PR titles are Conventional Commits with a required scope (`feat(games): ...`). PR bodies follow [`pull_request_template.md`](./pull_request_template.md). Gates before done: `npm run quality`, `npm run check`, `npm test`, `npm run e2e`, `npm run build`.
+- Code and reviews follow the universal standard linked in `AGENTS.md` section 4 plus Tempra's additions listed right below it.
+- Before suggesting a new component, util, constant or type, check [`docs/ai/reusability.md`](../docs/ai/reusability.md).
+- PR titles and bodies: [`docs/ai/pr-and-ci.md`](../docs/ai/pr-and-ci.md). Gates: `AGENTS.md` section 2.

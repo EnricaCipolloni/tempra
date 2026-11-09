@@ -2,47 +2,7 @@
 
 SvelteKit 2, Svelte 5 (runes), TypeScript, Tailwind 4, static adapter with `404.html` fallback, `ssr = false` (state lives in the browser).
 
-## Folder taxonomy (closed)
-
-```
-src/
-  app.css                     design tokens (dark-first), @theme bridge to Tailwind, shared primitives
-  app.html                    font preload, manifest, favicon (fonts are self-hosted in static/fonts, @font-face in app.css)
-  routes/
-    +layout.svelte            header (brand, Athlete / Coach tabs), footer (legal links, locale picker, vibration switch, version), Toast
-    +page.svelte              landing
-    athlete/+page.svelte      join form → home card → BlockRunner → BlockSummary
-    coach/+page.svelte        create / restore → squad card + ConfigForm + ResultsTable
-    privacy/+page.svelte      privacy notice, one section per catalog key group (privacy.*)
-    terms/+page.svelte        terms of use, one section per entry of TERMS_SECTIONS (terms.<id>.title|text)
-  lib/
-    components/
-      games/                  one component per game + index.ts (GAME_COMPONENTS)
-      session/                BlockRunner, BlockSummary, TrialTimer, Distractors
-      coach/                  Roster, AthleteHistory, ConfigForm, ResultsTable
-      ui/                     Brand, Kpi, Toast, Sparkline, InfoTip ("i" button that shows a detail on demand)
-    constants/                config, legal, locale, supabase, messages/{it,en,pt-BR}.ts
-    services/                 supabase.service (lazy client), squad.service (RPC wrappers), realtime.service (channel: config, presence, result broadcast), haptics.service (fire-and-forget vibration)
-    stores/                   locale, haptics, squad (athlete side), coach, results (local history), outbox (unsent results), toast
-    types/                    config, result, game, presence
-    utils/                    i18n, legal, nullish, random, scoring, roster, storage, time, trial, device
-  service-worker.ts           offline shell (cache-first assets, network-first pages)
-  tests/                      node --test specs, `$lib/...` imports resolved by scripts/test/lib-resolver.mjs
-e2e/                          Playwright specs + supabase-mock.ts (every RPC intercepted, no network)
-android/, ios/                Capacitor shells; `npm run cap:sync` copies build/ into them. Generated web assets inside them are gitignored.
-```
-
-New code goes into the folder that already owns the concern. No new top-level folders without an explicit ask.
-
-## Svelte 5 patterns
-
-- `let { a, b }: Props = $props();` with a named `interface Props`. Anything computed from a prop at top level is `$derived(...)`; a plain `const` freezes the initial value and `svelte-check` warns (`state_referenced_locally`). Initial `$state` seeded from a prop uses `untrack(() => ...)` and an `$effect` that resyncs.
-- Event handlers are attributes: `onclick={...}`, `onsubmit={(e) => { e.preventDefault(); ... }}`.
-- Dynamic components: `const Game = $derived(GAME_COMPONENTS[key]); <Game {...props} />`.
-- Stores from `svelte/store` are used for cross-route browser state (`$localeStore`, `$squadStore`); runes for component-local state.
-- A form that edits a copy of a prop (`ConfigForm`) seeds `$state` with `untrack(() => clone(prop))` and is remounted by its parent with `{#key}` when the server value changes; no `$effect` resync (eslint forbids the `$state` + `$effect` pair).
-- Selectors for tests: `data-tid="..."` attributes (Playwright `testIdAttribute`), never CSS classes.
-- Timers and async loops start in `onMount` and are torn down in its return. `$effect` is reserved for subscriptions that must restart when a dependency changes (the realtime channel keyed by squad code, the coach results poll).
+Where files go and which way imports point: [`../structure.md`](../structure.md). Svelte 5, state, loop and service patterns: [`../patterns.md`](../patterns.md). Shared components, utils and CSS classes: [`../reusability.md`](../reusability.md). Tests: [`../testing.md`](../testing.md). This page keeps what is specific to the frontend.
 
 ## The game contract
 
@@ -62,11 +22,11 @@ interface GameProps {
 - Render `TrialTimer` inside `{#key trialId}` so the bar restarts per trial.
 - BlockRunner owns the slot clock and unmounts the game when the slot ends. A game never knows how long it runs.
 - BlockRunner also plays the haptics from `onTrial`, so a game never touches `haptics.service`. Calls there are never awaited and never throw: a reaction time must not wait on feedback. The footer switch writes `haptics.store`, which pushes a plain flag into the service, so a trial never reads storage. `rt_ms: null` on a correct trial means a withhold, which stays silent, so keep reporting `rt_ms` for every correct tap.
-- Register in `GAME_COMPONENTS`, add the key to `GAME_KEYS`, add `game.<key>.name|hint|about` to every catalog, document the ladder in `PRODUCT.md`.
+- Registering a new game, step by step: [`../workflows/add-a-game.md`](../workflows/add-a-game.md).
 
 ## i18n
 
-`t({ locale: $localeStore, key, values })` from `$lib/utils/i18n.utils`. Keys are flat dotted strings typed from the Italian catalog (`I18nKey`); `en.ts` and `pt-BR.ts` are `Record<I18nKey, string>` so TypeScript catches drift, and `scripts/check-locale-catalogs.mjs` catches it in `npm run lint` without a TS build. Placeholders are `{name}`. Locales are `it` (default), `en`, `pt-BR`: Portuguese copy is Brazilian (você, celular, tela). Resolution: the saved choice (`tempra.locale` in localStorage), else `matchLocale(navigator.languages)` by primary subtag (`pt-*` goes to `pt-BR`), else Italian. The footer picker is a native `<select>` with each language named in itself (`LOCALE_NAME`); the layout mirrors the locale onto `<html lang>`. A new locale touches `SUPPORTED_LOCALES`, `LOCALE_TAG`, `LOCALE_NAME`, the subtag map in `i18n.utils.ts`, `CATALOGS`, a new catalog file and the catalog tests. Labels that abbreviate a word (Stroop buttons) get their own `.short` key, since initials collide across languages.
+`t({ locale: $localeStore, key, values })` from `$lib/utils/i18n.utils`. Keys are flat dotted strings typed from the Italian catalog (`I18nKey`); `en.ts` and `pt-BR.ts` are `Record<I18nKey, string>` so TypeScript catches drift, and `scripts/check-locale-catalogs.mjs` catches it in `npm run lint` without a TS build. Placeholders are `{name}`. Locales are `it` (default), `en`, `pt-BR`: Portuguese copy is Brazilian (você, celular, tela). Resolution: the saved choice (`tempra.locale` in localStorage), else `matchLocale(navigator.languages)` by primary subtag (`pt-*` goes to `pt-BR`), else Italian. The footer picker is a native `<select>` with each language named in itself (`LOCALE_NAME`); the layout mirrors the locale onto `<html lang>`. Adding a key or a whole locale: [`../workflows/add-copy-or-a-locale.md`](../workflows/add-copy-or-a-locale.md). Labels that abbreviate a word (Stroop buttons) get their own `.short` key, since initials collide across languages.
 
 ## Design tokens
 
@@ -86,12 +46,6 @@ Athletes read between sets, out of breath: every visible line is short, one idea
 ## Accessibility
 
 Real `<button>` / `<a>` elements, labelled inputs (`for` / `id`), `role="status"` on the toast, `aria-label` on icon-only or colour-only controls (Stroop buttons carry the colour name). Respect `prefers-reduced-motion` (all transitions off).
-
-## Testing
-
-- Unit: `npm test` runs `node --test` over `src/tests/*.test.ts` with TypeScript stripped on the fly. Pure modules only (scoring, roster, i18n, trial gate). Keep logic that deserves a test out of components.
-- E2E: `npm run e2e` (Playwright, chromium desktop + Pixel 7, locale `it-IT`, dev server on 5173). `e2e/supabase-mock.ts` intercepts every call to the Supabase host and plays the RPC contract back, so the suite is deterministic and never touches the live project. Mock state is per test; set `state.config` before `page.goto`.
-- Locally without a Playwright download: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers npx playwright test` where that folder exists; otherwise `npm run e2e:install` once.
 
 ## Native shells
 
