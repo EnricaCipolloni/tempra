@@ -8,9 +8,5 @@
 		"@capacitor/app",
 		"@capacitor/splash-screen",
 		"@capacitor/status-bar"
-	],
-	"ignoreIssues": {
-		// GAME_ORDER is dead: a copy of GAME_KEYS (follow-up in docs/ai/patterns.md).
-		"src/lib/constants/config.constants.ts": ["exports"]
-	}
+	]
 }

@@ -48,7 +48,7 @@ The patterns Tempra really uses, each with an example to copy. When the code hol
 
 Each is a named follow-up. Do not copy it; fix it only in a PR of its own.
 
-- **The game list is written three times:** `GAME_KEYS` (`src/lib/types/config.ts:1`), `DEFAULT_SQUAD_CONFIG.games` (`src/lib/constants/config.constants.ts:6`) and `GAME_ORDER` (`src/lib/constants/config.constants.ts:38`, unused). New code reads `GAME_KEYS`.
+- **The game list is written twice:** `GAME_KEYS` (`src/lib/types/config.ts:1`) and `DEFAULT_SQUAD_CONFIG.games` (`src/lib/constants/config.constants.ts:6`). New code reads `GAME_KEYS`.
 - **The config default merge is written twice:** `normaliseConfig` (`src/lib/services/squad.service.ts:7`) and inline in `src/lib/services/realtime.service.ts:49`.
 - **`mean` is written inline three times** (`src/lib/utils/roster.utils.ts:30`, `:66`, `src/lib/utils/scoring.utils.ts:32`), and the same `reduce` sum appears in `src/lib/utils/scoring.utils.ts:23`, `src/lib/services/squad.service.ts:74` and `src/routes/athlete/+page.svelte:189`.
 - **Block result assembly lives in a route:** `finish` (`src/routes/athlete/+page.svelte:178`) computes score, accuracy and index, untested. It belongs in `scoring.utils`.

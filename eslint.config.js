@@ -9,7 +9,7 @@ import svelteConfig from './svelte.config.js';
 // (docs/ai/structure.md). In flat config a file-specific no-restricted-imports
 // replaces the global one, so each block spreads the shared relative-path ban.
 const NO_RELATIVE_ACROSS_FOLDERS = {
-	regex: '^\\.\\./(?!app\\.css$)',
+	regex: '^\\.\\./',
 	message: 'Import through $lib/... (AGENTS.md section 4).'
 };
 
@@ -20,6 +20,11 @@ const layer = (forbidden, why) => ({
 
 const restrictImports = (...patterns) => ({
 	'no-restricted-imports': ['error', { patterns: [NO_RELATIVE_ACROSS_FOLDERS, ...patterns] }]
+});
+
+const componentsOf = (forbidden, why) => ({
+	regex: `^\\$lib/components/(${forbidden.join('|')})(/|$)`,
+	message: `${why} See docs/ai/structure.md.`
 });
 
 export default ts.config(
@@ -115,6 +120,26 @@ export default ts.config(
 		rules: restrictImports(
 			layer(['services', 'components'], 'ui/ components import no other component and no service.')
 		)
+	},
+	{
+		files: ['src/lib/components/coach/**'],
+		rules: restrictImports(
+			componentsOf(['games', 'session'], 'Coach components use only ui/ components.')
+		)
+	},
+	{
+		files: ['src/lib/components/session/**'],
+		rules: restrictImports(componentsOf(['coach'], 'Session components never import coach/.'))
+	},
+	{
+		// The global stylesheet lives outside $lib; this is the one file that imports it.
+		files: ['src/routes/+layout.svelte'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{ patterns: [{ ...NO_RELATIVE_ACROSS_FOLDERS, regex: '^\\.\\./(?!app\\.css$)' }] }
+			]
+		}
 	},
 	{
 		files: ['src/lib/components/games/**'],
