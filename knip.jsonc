@@ -1,0 +1,16 @@
+{
+	"$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+	// Dead code gate (docs/ai/pr-and-ci.md). Everything listed below is today's
+	// baseline: remove an entry when its finding is fixed, never add one.
+	"ignoreExportsUsedInFile": true,
+	"ignoreDependencies": [
+		// Capacitor plugins loaded by the native shells through `cap sync`, not imported by the web code.
+		"@capacitor/app",
+		"@capacitor/splash-screen",
+		"@capacitor/status-bar"
+	],
+	"ignoreIssues": {
+		// GAME_ORDER is dead: a copy of GAME_KEYS (follow-up in docs/ai/patterns.md).
+		"src/lib/constants/config.constants.ts": ["exports"]
+	}
+}

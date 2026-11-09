@@ -30,18 +30,18 @@ A contradiction is a bug in the lower-ranked source: stop and ask the owner, or 
 
 ## Protected paths (change only when the task names them)
 
-| Path                                                                          | Reason                                                                            |
-| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `.github/workflows/**`, `.github/dependabot.yml`                              | CI and deploy integrity; `ci(...)` PRs only.                                      |
-| `package.json` dependencies, `package-lock.json`                              | New or upgraded dependencies need an explicit ask.                                |
-| `supabase/migrations/**`                                                      | Append-only history of the live database. Never edit an applied file.             |
-| `src/lib/constants/supabase.constants.ts`                                     | Project URL and publishable key. Rotate deliberately, never casually.             |
-| `src/lib/constants/legal.constants.ts`                                        | Operator name and contact: set by the owner before a store release.               |
-| `static/CNAME`                                                                | The custom domain; DNS points here.                                               |
-| `capacitor.config.ts`, `android/**`, `ios/**`                                 | App ID and native projects; the App ID is fixed after the first store submission. |
-| `eslint.config.js`, `.prettierrc`, `tsconfig.json`                            | Lint, format and TS policy.                                                       |
-| `release-please-config.json`, `.release-please-manifest.json`, `CHANGELOG.md` | Owned by release-please.                                                          |
-| `HANDOVER.md`                                                                 | The owner's checklist; tick boxes only when a step is really done.                |
+| Path                                                                                                        | Reason                                                                            |
+| ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `.github/workflows/**`, `.github/dependabot.yml`                                                            | CI and deploy integrity; `ci(...)` PRs only.                                      |
+| `package.json` dependencies, `package-lock.json`                                                            | New or upgraded dependencies need an explicit ask.                                |
+| `supabase/migrations/**`                                                                                    | Append-only history of the live database. Never edit an applied file.             |
+| `src/lib/constants/supabase.constants.ts`                                                                   | Project URL and publishable key. Rotate deliberately, never casually.             |
+| `src/lib/constants/legal.constants.ts`                                                                      | Operator name and contact: set by the owner before a store release.               |
+| `static/CNAME`                                                                                              | The custom domain; DNS points here.                                               |
+| `capacitor.config.ts`, `android/**`, `ios/**`                                                               | App ID and native projects; the App ID is fixed after the first store submission. |
+| `eslint.config.js`, `eslint-suppressions.json`, `knip.jsonc`, `.jscpd.json`, `.prettierrc`, `tsconfig.json` | Lint, format and TS policy; the quality gate baseline only shrinks.               |
+| `release-please-config.json`, `.release-please-manifest.json`, `CHANGELOG.md`                               | Owned by release-please.                                                          |
+| `HANDOVER.md`                                                                                               | The owner's checklist; tick boxes only when a step is really done.                |
 
 ## Generated paths (never edit by hand)
 

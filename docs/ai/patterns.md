@@ -59,4 +59,5 @@ Each is a named follow-up. Do not copy it; fix it only in a PR of its own.
 - **An error matched by its message text:** `UNKNOWN_SQUAD = 'unknown squad'` (`src/lib/stores/outbox.store.ts:7`) couples the client to the wording of a SQL `raise`.
 - **An eslint disable to compare with `null`:** `src/lib/services/squad.service.ts:9`, where `nonNullish(raw)` does the job.
 - **A stale comment:** `src/lib/types/game.ts:7` says game cleanup happens in `$effect`; it happens in `onMount`.
+- **The results table is written three times:** the same rows and columns in `src/lib/components/coach/AthleteHistory.svelte:92`, `src/lib/components/coach/ResultsTable.svelte:38` and `src/routes/athlete/+page.svelte:380` (jscpd finds them). A shared component would remove most of today's duplication.
 - **A limit mirrored by hand:** `HISTORY_LIMIT = 1000` (`src/routes/coach/+page.svelte:37`) repeats the cap inside `list_results`.
