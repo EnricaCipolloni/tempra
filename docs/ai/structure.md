@@ -57,7 +57,7 @@ A route wires stores, services and components together; logic worth a test does 
 
 ## Direction of dependencies
 
-Imports point down this list, never up, and always through `$lib/...` (never a relative path across folders):
+A module may import any layer below its own (not only the next one), and modules of its own layer; never a layer above. Always through `$lib/...`, never a relative path across folders:
 
 ```
 routes
@@ -72,7 +72,7 @@ routes
 - `types/` imports only other types.
 - `constants/` imports only types (and other constants).
 - `utils/` never imports a service, a store or a component; it may read constants (for example `legal.utils` reads `legal.constants`).
-- `services/` never import a store or a component. They talk to Supabase or to Capacitor and nothing else.
+- `services/` never import a store or a component. They may use each other (`squad.service` → `supabase.service`), and they are the only modules that talk to Supabase or Capacitor.
 - `stores/` may call a service (`outbox.store` → `squad.service`, `haptics.store` → `haptics.service`), never a component.
 - A game never imports a service or a store other than `locale.store`, and from `session/` only `TrialTimer`: it gets everything else through `GameProps` and reports through `onTrial`. Only `BlockRunner` mounts games (through `GAME_COMPONENTS`) and plays the haptics.
 - `ui/` components import no other component; they may read `locale.store` and `toast.store`.

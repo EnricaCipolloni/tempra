@@ -1,11 +1,11 @@
 # Testing
 
-Two layers, nothing in between: unit specs for pure modules, Playwright for everything a user does. There are no component tests.
+Two layers, nothing in between: unit specs for pure modules (plus `haptics.service`, the one side-effecting module tested with its platform stubbed), Playwright for everything a user does. There are no component tests.
 
 ## Unit (`src/tests/*.test.ts`)
 
 - `npm test` runs `node --test` over `src/tests/*.test.ts` with TypeScript stripped on the fly (`--experimental-strip-types`). `scripts/test/register.mjs` loads `scripts/test/lib-resolver.mjs`, so specs import through `$lib/...` like the app does.
-- Pure modules only: scoring, roster, i18n, legal, haptics (the service, with `navigator.vibrate` stubbed) and the trial gate (today inside `src/tests/i18n.test.ts:65`; a new spec for it goes in its own `trial.test.ts`). Keep logic that deserves a test out of components and routes; move it to `src/lib/utils/` and test it there.
+- Pure modules: scoring, roster, i18n, legal, and the documented exception haptics (the service, with `navigator.vibrate` stubbed) and the trial gate (today inside `src/tests/i18n.test.ts:65`; a new spec for it goes in its own `trial.test.ts`). Keep logic that deserves a test out of components and routes; move it to `src/lib/utils/` and test it there.
 - Style: `describe` / `it` from `node:test`, `assert` from `node:assert/strict`, a small factory with `Partial<T>` overrides for fixtures (`row(...)` in `src/tests/roster.test.ts:7`). One file per module, named after it (`scoring.utils.ts` → `scoring.test.ts`).
 - A spec may spell out the values it expects; nothing else may (rule 5 of the universal standard).
 

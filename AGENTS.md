@@ -69,7 +69,7 @@ Every change follows the universal standard in Officina: **https://github.com/An
 
 ## 6. Truth hierarchy
 
-Code, then CI, then `docs/ai/**`, then this file, then the tool layers (`CLAUDE.md`, `GEMINI.md`, Copilot, Cursor, Windsurf, Aider files). The full order and how to resolve a contradiction: [`docs/ai/governance.md`](./docs/ai/governance.md#truth-hierarchy). On a contradiction, stop and ask, or fix the lower source in its own change.
+Code, then CI, then `CODEOWNERS` (none today), then `docs/ai/**`, then this file together with the universal standard, then the tool layers (`CLAUDE.md`, `GEMINI.md`, Copilot, Cursor, Windsurf, Aider files). The full order and how to resolve a contradiction: [`docs/ai/governance.md`](./docs/ai/governance.md#truth-hierarchy). On a contradiction, stop and ask, or fix the lower source in its own change.
 
 ## 7. Meta-update rule
 
