@@ -1,0 +1,7 @@
+{
+	"path": ["src", "e2e", "scripts"],
+	"ignore": ["**/constants/messages/**"],
+	"reporters": ["console"],
+	"gitignore": true,
+	"threshold": 2.2
+}

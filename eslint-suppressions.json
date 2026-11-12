@@ -1,0 +1,37 @@
+{
+  "e2e/supabase-mock.ts": {
+    "complexity": {
+      "count": 1
+    }
+  },
+  "src/lib/components/games/NBack.svelte": {
+    "complexity": {
+      "count": 1
+    }
+  },
+  "src/lib/services/realtime.service.ts": {
+    "max-lines-per-function": {
+      "count": 1
+    }
+  },
+  "src/lib/stores/outbox.store.ts": {
+    "max-depth": {
+      "count": 1
+    }
+  },
+  "src/routes/athlete/+page.svelte": {
+    "max-lines": {
+      "count": 1
+    }
+  },
+  "src/routes/coach/+page.svelte": {
+    "max-lines": {
+      "count": 1
+    }
+  },
+  "src/service-worker.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  }
+}

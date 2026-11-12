@@ -1,4 +1,4 @@
-import type { Difficulty, GameKey, SquadConfig } from '$lib/types/config';
+import type { Difficulty, SquadConfig } from '$lib/types/config';
 
 /** Mirrors `public.default_squad_config()` in the Supabase migration. */
 export const DEFAULT_SQUAD_CONFIG: SquadConfig = {
@@ -34,5 +34,3 @@ export const ladder = <T>(values: readonly [T, T, T, T, T], difficulty: Difficul
 	values[difficulty - 1];
 
 export const NBACK_N = [1, 1, 2, 2, 3] as const;
-
-export const GAME_ORDER: GameKey[] = ['stroop', 'gonogo', 'nback', 'flanker', 'math', 'trail'];

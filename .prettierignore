@@ -8,3 +8,4 @@ CHANGELOG.md
 /ios
 /playwright-report
 /test-results
+eslint-suppressions.json

@@ -21,13 +21,23 @@ Follow [`.github/pull_request_template.md`](../../.github/pull_request_template.
 ## 4. Local quality gates
 
 ```bash
-npm run quality   # format (prettier --write, eslint --fix) then lint (prettier --check, eslint --max-warnings 0, i18n catalogs)
+npm run quality   # format (prettier --write, eslint --fix) then lint (prettier --check, eslint --max-warnings 0, i18n catalogs, knip, jscpd)
 npm run check     # svelte-check against tsconfig.json
 npm test          # node --test, TypeScript via --experimental-strip-types
 npm run e2e       # Playwright, mocked Supabase (npm run e2e:install once)
 npm run build     # vite build, static export to build/
 npm run cap:sync  # build + copy into android/ and ios/ (only when touching the shells)
 ```
+
+## 4a. Quality gate
+
+`npm run lint` (inside `npm run quality`, and the `site` job in CI) also enforces, with no workflow of its own:
+
+- **ESLint limits** in `eslint.config.js`: `complexity` 10, `max-depth` 3, `max-params` 3, `max-nested-callbacks` 3, `max-lines` 300 and `max-lines-per-function` 60 (both off for catalogs and specs), `no-explicit-any`, no `as unknown as`, and `reportUnusedDisableDirectives`.
+- **Import boundaries:** `no-restricted-imports` blocks relative imports across folders (only `src/routes/+layout.svelte` may import `../app.css`), every import that points up the layers in [`structure.md`](./structure.md#direction-of-dependencies), and the component directions listed there (games, session, coach, ui).
+- **Baseline:** what already broke a limit when the gate landed is listed in `eslint-suppressions.json` (ESLint bulk suppressions). It may only shrink: fixing one makes ESLint fail until you run `npx eslint . --prune-suppressions`, and a new violation is never added with `--suppress-all`.
+- **Dead code:** `knip` (`knip.jsonc`, `npm run lint:dead`). Its only baseline is `ignoreDependencies` for the Capacitor plugins the native shells load; any other finding fails.
+- **Duplication:** `jscpd` (`.jscpd.json`, `npm run lint:dup`) fails above 2.2% duplicated lines (2.13% when it landed). Lower the threshold when a clone is removed.
 
 ## 5. What CI runs
 

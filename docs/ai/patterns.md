@@ -48,7 +48,7 @@ The patterns Tempra really uses, each with an example to copy. When the code hol
 
 Each is a named follow-up. Do not copy it; fix it only in a PR of its own.
 
-- **The game list is written three times:** `GAME_KEYS` (`src/lib/types/config.ts:1`), `DEFAULT_SQUAD_CONFIG.games` (`src/lib/constants/config.constants.ts:6`) and `GAME_ORDER` (`src/lib/constants/config.constants.ts:38`, unused). New code reads `GAME_KEYS`.
+- **The game list is written twice:** `GAME_KEYS` (`src/lib/types/config.ts:1`) and `DEFAULT_SQUAD_CONFIG.games` (`src/lib/constants/config.constants.ts:6`). New code reads `GAME_KEYS`.
 - **The config default merge is written twice:** `normaliseConfig` (`src/lib/services/squad.service.ts:7`) and inline in `src/lib/services/realtime.service.ts:49`.
 - **`mean` is written inline three times** (`src/lib/utils/roster.utils.ts:30`, `:66`, `src/lib/utils/scoring.utils.ts:32`), and the same `reduce` sum appears in `src/lib/utils/scoring.utils.ts:23`, `src/lib/services/squad.service.ts:74` and `src/routes/athlete/+page.svelte:189`.
 - **Block result assembly lives in a route:** `finish` (`src/routes/athlete/+page.svelte:178`) computes score, accuracy and index, untested. It belongs in `scoring.utils`.
@@ -59,4 +59,5 @@ Each is a named follow-up. Do not copy it; fix it only in a PR of its own.
 - **An error matched by its message text:** `UNKNOWN_SQUAD = 'unknown squad'` (`src/lib/stores/outbox.store.ts:7`) couples the client to the wording of a SQL `raise`.
 - **An eslint disable to compare with `null`:** `src/lib/services/squad.service.ts:9`, where `nonNullish(raw)` does the job.
 - **A stale comment:** `src/lib/types/game.ts:7` says game cleanup happens in `$effect`; it happens in `onMount`.
+- **The results table is written three times:** the same rows and columns in `src/lib/components/coach/AthleteHistory.svelte:92`, `src/lib/components/coach/ResultsTable.svelte:38` and `src/routes/athlete/+page.svelte:380` (jscpd finds them). A shared component would remove most of today's duplication.
 - **A limit mirrored by hand:** `HISTORY_LIMIT = 1000` (`src/routes/coach/+page.svelte:37`) repeats the cap inside `list_results`.
