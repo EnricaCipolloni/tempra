@@ -42,10 +42,7 @@ Fallbacks: athletes poll `get_squad` every 20 s, the coach polls `get_squad` + `
 
 ## Changing the schema
 
-1. Add `supabase/migrations/YYYYMMDDHHMMSS_<name>.sql`. Never edit an applied file.
-2. Apply it to the project (Supabase MCP `apply_migration`, or the dashboard SQL editor), then note the date in the file header.
-3. If `SquadConfig` changes: update the TypeScript type, `DEFAULT_SQUAD_CONFIG`, `default_squad_config()` (new migration with `create or replace`), `ConfigForm.svelte`, every catalog, `PRODUCT.md`. `normaliseConfig` in `squad.service.ts` merges defaults over stored JSON, so older rows keep working.
-4. A new RPC: `revoke all ... from public` then `grant execute ... to anon, authenticated`, like the existing ones.
+Step by step, including a new RPC and a new `SquadConfig` field: [`../workflows/change-the-schema.md`](../workflows/change-the-schema.md) and [`../workflows/add-a-remote-parameter.md`](../workflows/add-a-remote-parameter.md). `normaliseConfig` in `squad.service.ts` merges defaults over stored JSON, so older rows keep working.
 
 ## Keys
 

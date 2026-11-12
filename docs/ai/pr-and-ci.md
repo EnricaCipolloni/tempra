@@ -2,7 +2,7 @@
 
 ## 1. PR title
 
-Conventional Commits with a **required scope**: `type(scope): description`. The `pr-title` job rejects anything else. Verbs: `feat`, `fix`, `perf`, `refactor`, `style`, `docs`, `test`, `chore`, `build`, `ci`, `deps`, `revert`. Scopes in use: `games`, `session`, `coach`, `athlete`, `home`, `i18n`, `scoring`, `supabase`, `realtime`, `pages`, `ci`, `deps`, `ai` (for `docs/ai/**`), `release`, `mobile`.
+Conventional Commits with a **required scope**: `type(scope): description`. The `pr-title` job rejects anything else. Verbs: `feat`, `fix`, `perf`, `refactor`, `style`, `docs`, `test`, `chore`, `build`, `ci`, `deps`, `revert`. Scopes in use: `games`, `session`, `coach`, `athlete`, `home`, `i18n`, `scoring`, `supabase`, `realtime`, `pages`, `brand`, `repo`, `github`, `ci`, `actions`, `deps`, `npm-deps`, `ai` (for `docs/ai/**` and the agent pointer files), `release`, `mobile`. Prefer an existing scope; a new one names the area the change lives in.
 
 Examples: `feat(games): add simon sequence`, `fix(realtime): resubscribe after reconnect`, `docs(ai): document the game contract`.
 
@@ -10,9 +10,13 @@ Examples: `feat(games): add simon sequence`, `fix(realtime): resubscribe after r
 
 Follow [`.github/pull_request_template.md`](../../.github/pull_request_template.md): `# Motivation`, `# Changes`, `# Tests`. No hard-wrapped lines, no filler, no diff narration; write what the diff cannot say (why, trade-offs, what was left out). Tests are concrete: commands and outcomes, manual steps at 390px.
 
-## 3. Atomicity
+## 3. Scope and parallel PRs
 
-One logical change per PR. "And also" means split.
+[Rule 2, scoped](https://github.com/AntonioVentilii/officina/blob/main/standards/code.md#2-scoped) and [rule 3, parallel, not stacked](https://github.com/AntonioVentilii/officina/blob/main/standards/code.md#3-parallel-not-stacked) of the universal standard. What they mean in Tempra:
+
+- **One scope carries everything it needs to pass CI.** A new RPC travels with its migration, its wrapper in `squad.service.ts`, the mock in `e2e/supabase-mock.ts` and its spec; new copy travels with all three catalogs; a new coach parameter with `DEFAULT_SQUAD_CONFIG` and `default_squad_config()`. The [workflows](./workflows/) list each set.
+- **Merges are squash only**, so one PR is one commit on `main` and its title is the changelog line.
+- **Stack only on code another open PR adds:** a feature that calls an RPC still in review is stacked on it; docs, tooling and every other feature branch from `main`.
 
 ## 4. Local quality gates
 
@@ -54,7 +58,7 @@ The ruleset for `main` lives only in the repository settings (Settings → Rules
 
 ## 8. Database changes
 
-Write a new file under `supabase/migrations/` named `YYYYMMDDHHMMSS_<snake_case>.sql`, apply it to the `tempra` project (Supabase MCP `apply_migration` or the dashboard SQL editor), and describe the applied state in the file header. Never edit an applied migration.
+Follow [`workflows/change-the-schema.md`](./workflows/change-the-schema.md). Never edit an applied migration, and apply a new one to the live project before merging, since the deploy runs on every push to `main`.
 
 ## 9. Dependencies
 
